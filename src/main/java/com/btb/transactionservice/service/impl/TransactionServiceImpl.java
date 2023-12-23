@@ -24,12 +24,9 @@ public class TransactionServiceImpl implements TransactionService {
         log.trace("Event: Buy order: user: {}, assetId: {}", buyOrderDTO.getUserId(), buyOrderDTO.getAssetId());
 
         Transaction transaction = new Transaction();
-        // TODO comprobar usuario
         transaction.setUserId(buyOrderDTO.getUserId());
-        // TODO comprobar activo
         transaction.setAssetId(buyOrderDTO.getAssetId());
         transaction.setQuantity(buyOrderDTO.getQuantity());
-        // TODO Comprobar precio y delay del mismo
         transaction.setPriceUnit(buyOrderDTO.getPriceUnit());
         transaction.setCreatedAt(new Date());
         transaction.setTransactionType(TransactionTypeMD.BUY.id());
@@ -43,12 +40,9 @@ public class TransactionServiceImpl implements TransactionService {
         log.trace("Event: Sell order: user: {}, assetId: {}", sellOrderDTO.getUserId(), sellOrderDTO.getAssetId());
 
         Transaction transaction = new Transaction();
-        // TODO comprobar usuario
         transaction.setUserId(sellOrderDTO.getUserId());
-        // TODO comprobar activo
         transaction.setAssetId(sellOrderDTO.getAssetId());
         transaction.setQuantity(sellOrderDTO.getQuantity());
-        // TODO Comprobar precio y delay del mismo
         transaction.setPriceUnit(sellOrderDTO.getPriceUnit());
         transaction.setCreatedAt(new Date());
         transaction.setTransactionType(TransactionTypeMD.SELL.id());

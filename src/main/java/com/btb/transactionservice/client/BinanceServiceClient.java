@@ -1,4 +1,4 @@
 package com.btb.transactionservice.client;
 
-public class BriefcaseServiceClient {
+public class BinanceServiceClient {
 }
