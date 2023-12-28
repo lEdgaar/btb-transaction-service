@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.btb.transactionservice.persistence.mapper.TransactionMapper">
+
+    <resultMap id="resultMap" type="com.btb.transactionservice.entity.Transaction">
+
+        <id property="id" column="ID" javaType="Long" jdbcType="BIGINT" />
+
+        <result property="createdAt" column="CREATED_AT" javaType="Date" jdbcType="TIMESTAMP" />
+
+        <result property="transactionType" column="TRANSACTION_TYPE" javaType="long" jdbcType="BIGINT" />
+
+        <result property="quantity" column="QUANTITY" javaType="long" jdbcType="BIGINT" />
+
+        <result property="assetId" column="ASSET_ID" javaType="long" jdbcType="BIGINT" />
+
+        <result property="priceUnit" column="PRICE_UNIT" javaType="double" jdbcType="DOUBLE" />
+
+        <result property="userId" column="USER_ID" javaType="long" jdbcType="BIGINT" />
+
+    </resultMap>
+
+    <sql id="selectColumnNamesClause">
+        RES.ID,
+        RES.CREATED_AT,
+        RES.TRANSACTION_TYPE,
+        RES.QUANTITY,
+        RES.ASSET_ID,
+        RES.PRICE_UNIT,
+        RES.USER_ID
+    </sql>
+
+    <sql id="whereFilteredClause">
+        <if test="id != null">
+            AND RES.ID=#{id}
+        </if>
+        <if test="createdAt != null">
+            AND RES.CREATED_AT=#{createdAt}
+        </if>
+        <if test="transactionType != null">
+            AND RES.TRANSACTION_TYPE=#{transactionType}
+        </if>
+        <if test="quantity != null">
+            AND RES.QUANTITY=#{quantity}
+        </if>
+        <if test="assetId != null">
+            AND RES.ASSET_ID=#{assetId}
+        </if>
+        <if test="priceUnit != null">
+            AND RES.PRICE_UNIT=#{priceUnit}
+        </if>
+        <if test="userId != null">
+            AND RES.USER_ID=#{userId}
+        </if>
+    </sql>
+
+    <sql id="insertColumnNamesClause">
+        CREATED_AT,
+        TRANSACTION_TYPE,
+        QUANTITY,
+        ASSET_ID,
+        PRICE_UNIT,
+        USER_ID
+    </sql>
+
+    <sql id="insertValuesClause">
+        #{createdAt},
+        #{transactionType},
+        #{quantity},
+        #{assetId},
+        #{priceUnit},
+        #{userId}
+    </sql>
+
+    <sql id="updateSetClause">
+        CREATED_AT=#{createdAt},
+        TRANSACTION_TYPE=#{transactionType},
+        QUANTITY=#{quantity},
+        ASSET_ID=#{assetId},
+        PRICE_UNIT=#{priceUnit},
+        USER_ID=#{userId}
+    </sql>
+
+    <select id="findById" resultMap="resultMap" parameterType="Long">
+        select
+        <include refid="selectColumnNamesClause" />
+        from
+        TRANSACTIONS
+        RES
+        where
+        RES.ID=#{value}
+    </select>
+
+    <select id="findAll" resultMap="resultMap">
+        select
+        <include refid="selectColumnNamesClause" />
+        from
+        TRANSACTIONS
+        RES
+        order by
+        RES.ID asc
+    </select>
+
+    <select id="findByFilter" resultMap="resultMap" parameterType="com.btb.transactionservice.entity.Transaction">
+        select
+        <include refid="selectColumnNamesClause" />
+        from
+        TRANSACTIONS
+        RES
+        where 1=1
+        <include refid="whereFilteredClause" />
+        order by
+        RES.ID asc
+    </select>
+
+    <insert id="save" parameterType="com.btb.transactionservice.entity.Transaction" useGeneratedKeys="true" keyColumn="ID" keyProperty="id">
+        insert into
+        TRANSACTIONS
+        (
+        <include refid="insertColumnNamesClause" />
+        )
+        values
+        (
+        <include refid="insertValuesClause" />
+        )
+    </insert>
+
+    <update id="update" parameterType="com.btb.transactionservice.entity.Transaction">
+        update
+        TRANSACTIONS
+        set
+        <include refid="updateSetClause" />
+        where
+        ID=#{id}
+    </update>
+
+    <delete id="delete" parameterType="Long">
+        delete from
+            TRANSACTIONS
+        where
+            ID=#{value}
+    </delete>
+
+</mapper>
