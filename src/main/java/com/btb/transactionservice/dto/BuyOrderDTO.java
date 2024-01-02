@@ -11,12 +11,12 @@ import lombok.Setter;
 @NoArgsConstructor
 public class BuyOrderDTO {
 
-    private long userId;
+    private String symbol;
 
-    private long assetId;
+    private String side = "BUY";
 
-    private double priceUnit;
+    private String market = "MARKET";
 
-    private long quantity;
+    private Double quantity;
 
 }

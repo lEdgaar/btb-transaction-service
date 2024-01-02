@@ -1,54 +1,33 @@
 package com.btb.transactionservice.service.impl;
 
+import com.btb.transactionservice.client.BinanceServiceClient;
 import com.btb.transactionservice.dto.BuyOrderDTO;
 import com.btb.transactionservice.dto.SellOrderDTO;
-import com.btb.transactionservice.entity.Transaction;
-import com.btb.transactionservice.md.TransactionTypeMD;
-import com.btb.transactionservice.persistence.mapper.TransactionMapper;
 import com.btb.transactionservice.service.TransactionService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 
 @Log4j2
 @Service
 public class TransactionServiceImpl implements TransactionService {
 
     @Autowired
-    private TransactionMapper transactionMapper;
+    private BinanceServiceClient binanceServiceClient;
 
     @Override
     public void buyOrder(BuyOrderDTO buyOrderDTO) {
-        log.trace("Event: Buy order: user: {}, assetId: {}", buyOrderDTO.getUserId(), buyOrderDTO.getAssetId());
+        log.info("Event: Buy order");
 
-        Transaction transaction = new Transaction();
-        transaction.setUserId(buyOrderDTO.getUserId());
-        transaction.setAssetId(buyOrderDTO.getAssetId());
-        transaction.setQuantity(buyOrderDTO.getQuantity());
-        transaction.setPriceUnit(buyOrderDTO.getPriceUnit());
-        transaction.setCreatedAt(new Date());
-        transaction.setTransactionType(TransactionTypeMD.BUY.id());
-
-        transactionMapper.save(transaction);
-        log.trace("Transaction saved for userId: {}", transaction.getUserId());
+        binanceServiceClient.createOrder(buyOrderDTO);
     }
 
     @Override
     public void sellOrder(SellOrderDTO sellOrderDTO) {
-        log.trace("Event: Sell order: user: {}, assetId: {}", sellOrderDTO.getUserId(), sellOrderDTO.getAssetId());
+        log.info("Event: Sell order");
 
-        Transaction transaction = new Transaction();
-        transaction.setUserId(sellOrderDTO.getUserId());
-        transaction.setAssetId(sellOrderDTO.getAssetId());
-        transaction.setQuantity(sellOrderDTO.getQuantity());
-        transaction.setPriceUnit(sellOrderDTO.getPriceUnit());
-        transaction.setCreatedAt(new Date());
-        transaction.setTransactionType(TransactionTypeMD.SELL.id());
-
-        transactionMapper.save(transaction);
-
+        binanceServiceClient.sellOrder(sellOrderDTO);
     }
 
 }

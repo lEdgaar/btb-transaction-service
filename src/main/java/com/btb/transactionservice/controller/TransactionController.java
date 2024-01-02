@@ -24,17 +24,11 @@ public class TransactionController {
 
     @PostMapping("/buy")
     public void buyOrder(@RequestBody BuyOrderDTO buyOrderDTO) {
-        log.trace("POST /transactions/buy user: {}, assetId: {}", buyOrderDTO.getUserId(), buyOrderDTO.getAssetId());
-
-        log.info("Event: Buy order: user: {}, assetId: {}", buyOrderDTO.getUserId(), buyOrderDTO.getAssetId());
         transactionService.buyOrder(buyOrderDTO);
     }
 
     @PostMapping("/sell")
     public void sellOrder(@RequestBody SellOrderDTO sellOrderDTO) {
-        log.trace("POST /transactions/sell user: {}, assetId: {}", sellOrderDTO.getUserId(), sellOrderDTO.getAssetId());
-
-        log.info("Event: Sell order: user: {}, assetId: {}", sellOrderDTO.getUserId(), sellOrderDTO.getAssetId());
         transactionService.sellOrder(sellOrderDTO);
     }
 
