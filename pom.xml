@@ -96,7 +96,7 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
-					<mainClass>com.btb.notificationservice.NotificationServiceApplication</mainClass>
+					<mainClass>com.btb.transactionservice.TransactionServiceApplication</mainClass>
 				</configuration>
 			</plugin>
 			<plugin>
